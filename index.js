@@ -2,28 +2,26 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import 'dotenv/config';
+import router from './auth.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(helmet());
-app.use(cors());
+app.use(cors({
+  origin: ['https://joelas613-dev.github.io', 'http://localhost:3000'],
+  credentials: true
+}));
 app.use(express.json());
 
+app.use('/api', router);
+
 app.get('/health', (_req, res) => {
-  res.json({ 
-    status: 'ok', 
-    app: 'DealRadar',
-    timestamp: new Date().toISOString() 
-  });
+  res.json({ status: 'ok', app: 'DealRadar', timestamp: new Date().toISOString() });
 });
 
 app.get('/', (_req, res) => {
-  res.json({ 
-    message: 'DealRadar API is running 🏠',
-    version: '1.0.0',
-    endpoints: ['/health', '/api/properties', '/api/auth/login']
-  });
+  res.json({ message: 'DealRadar API is running 🏠', version: '1.0.0' });
 });
 
 app.listen(PORT, '0.0.0.0', () => {

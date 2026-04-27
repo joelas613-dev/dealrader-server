@@ -13,15 +13,14 @@ app.use(cors({
   credentials: true
 }));
 app.use(express.json());
-
 app.use('/api', router);
 
 app.get('/health', (_req, res) => {
-  res.json({ status: 'ok', app: 'DealRadar', timestamp: new Date().toISOString() });
+  res.json({ status: 'ok' });
 });
 
 app.get('/', (_req, res) => {
-  res.json({ message: 'DealRadar API is running 🏠', version: '1.0.0' });
+  res.json({ message: 'DealRadar API is running 🏠' });
 });
 
 app.listen(PORT, '0.0.0.0', () => {
